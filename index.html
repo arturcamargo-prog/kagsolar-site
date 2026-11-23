@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#000F26">
+  <meta name="description" content="KAG Solar — gestão inteligente de energia solar. Controle de usinas, rateio de créditos e faturamento em um só lugar. Em breve.">
+  <title>KAG Solar — Em breve</title>
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <style>
+    /* Montserrat — família oficial da marca (Google Fonts), hospedada localmente */
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/fonts/Montserrat-Regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/fonts/Montserrat-Medium.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/fonts/Montserrat-SemiBold.woff2") format("woff2");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/fonts/Montserrat-ExtraBold.woff2") format("woff2");
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --navy: #000F26;
+      --navy-brand: #002456;
+      --gold: #F5B120;
+      --gold-solar: #E89304;
+      --gold-glow: #F5B932;
+      --white: #FFFFFF;
+      --mist: #F5F6F8;
+      --muted: #5A6A80;
+      --text-soft: rgba(245, 246, 248, 0.78);
+      --font: "Montserrat", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: var(--font);
+      background: var(--navy);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient depth: slight official navy lift in the center */
+    .sky {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 38%, rgba(0, 36, 86, 0.55) 0%, rgba(0, 15, 38, 0) 62%),
+        var(--navy);
+    }
+
+    /* Soft dawn glow along the lower edge */
+    .horizon {
+      position: fixed;
+      left: 50%;
+      bottom: -8rem;
+      width: 60rem;
+      height: 22rem;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(245, 177, 32, 0.16) 0%, rgba(232, 147, 4, 0.06) 38%, transparent 70%);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3.5rem 1.5rem 2rem;
+      padding-top: max(3.5rem, calc(env(safe-area-inset-top) + 2.5rem));
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+      width: 100%;
+    }
+
+    .brand {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 1.75rem;
+    }
+
+    .rays-wrap {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      width: min(160vw, 56rem);
+      height: min(160vw, 56rem);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .rays {
+      width: 100%;
+      height: 100%;
+      background: repeating-conic-gradient(
+        from 0deg,
+        rgba(245, 185, 50, 0) 0deg 9deg,
+        rgba(245, 185, 50, 0.045) 10deg 11deg,
+        rgba(245, 177, 32, 0.09) 11.5deg 12.2deg,
+        rgba(245, 185, 50, 0.04) 12.8deg 13.6deg,
+        rgba(245, 185, 50, 0) 14.5deg 20deg
+      );
+      -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.45) 26%, rgba(0, 0, 0, 0.12) 48%, transparent 64%);
+              mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.45) 26%, rgba(0, 0, 0, 0.12) 48%, transparent 64%);
+      animation: spin-rays 80s linear infinite;
+    }
+
+    .glow {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      width: min(28rem, 90vw);
+      height: min(28rem, 90vw);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle, rgba(245, 185, 50, 0.38) 0%, rgba(245, 177, 32, 0.16) 26%, rgba(232, 147, 4, 0.06) 48%, transparent 68%);
+      animation: pulse-glow 6s ease-in-out infinite;
+    }
+
+    .logo {
+      position: relative;
+      z-index: 1;
+      width: min(82vw, 22.5rem);
+      height: auto;
+      display: block;
+      animation: rise-in 1s ease both;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 1.1rem;
+      padding-left: 0.42em; /* optically center tracking */
+      animation: rise-in 1s ease 0.12s both;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      display: block;
+      width: 2.4rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-solar), transparent);
+      opacity: 0.9;
+      flex: 0 0 auto;
+    }
+
+    h1 {
+      font-weight: 800;
+      font-size: clamp(1.85rem, 7.6vw, 2.35rem);
+      line-height: 1.14;
+      letter-spacing: -0.025em;
+      color: var(--white);
+      max-width: 14em;
+      margin: 0 auto 1.15rem;
+      animation: rise-in 1s ease 0.22s both;
+    }
+
+    .lede {
+      font-weight: 400;
+      font-size: 1.02rem;
+      line-height: 1.6;
+      color: var(--text-soft);
+      max-width: 22.5rem;
+      margin: 0 auto;
+      animation: rise-in 1s ease 0.32s both;
+    }
+
+    .meaning {
+      list-style: none;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      width: min(100%, 26rem);
+      margin: 2.4rem auto 0;
+      animation: rise-in 1s ease 0.44s both;
+    }
+
+    .meaning li {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0 0.55rem;
+      min-width: 0;
+    }
+
+    .meaning li + li {
+      border-left: 1px solid rgba(245, 177, 32, 0.28);
+    }
+
+    .letter {
+      font-weight: 800;
+      font-size: 1.15rem;
+      line-height: 1;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    .word {
+      font-weight: 500;
+      font-size: 0.68rem;
+      line-height: 1.25;
+      letter-spacing: 0.04em;
+      color: var(--text-soft);
+      text-transform: none;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      flex: 0 0 auto;
+      text-align: center;
+      font-weight: 400;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      color: var(--text-soft);
+      padding: 1.25rem 1.5rem 1.5rem;
+      padding-bottom: max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem));
+      animation: rise-in 1s ease 0.56s both;
+    }
+
+    footer span {
+      color: rgba(245, 177, 32, 0.7);
+      padding: 0 0.35em;
+    }
+
+    @keyframes spin-rays {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        opacity: 0.72;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 720px) {
+      main { padding: 4rem 2rem 2.5rem; }
+      .brand { margin-bottom: 2.15rem; }
+      .logo { width: min(70vw, 30rem); }
+      .eyebrow {
+        font-size: 0.8rem;
+        gap: 1.15rem;
+        margin-bottom: 1.35rem;
+      }
+      .eyebrow::before,
+      .eyebrow::after { width: 3.25rem; }
+      h1 {
+        font-size: clamp(2.6rem, 4vw, 3.35rem);
+        margin-bottom: 1.35rem;
+      }
+      .lede {
+        font-size: 1.125rem;
+        max-width: 28rem;
+      }
+      .meaning {
+        width: min(100%, 32rem);
+        margin-top: 3rem;
+      }
+      .letter { font-size: 1.35rem; }
+      .word { font-size: 0.8rem; letter-spacing: 0.06em; }
+      footer { font-size: 0.8rem; padding-bottom: 2rem; }
+      .glow {
+        width: 34rem;
+        height: 34rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rays, .glow, .logo, .eyebrow, h1, .lede, .meaning, footer {
+        animation: none !important;
+      }
+      .glow { opacity: 0.9; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="horizon" aria-hidden="true"></div>
+
+  <main>
+    <div class="brand">
+      <div class="rays-wrap" aria-hidden="true"><div class="rays"></div></div>
+      <div class="glow" aria-hidden="true"></div>
+      <picture>
+        <source type="image/webp" srcset="logo-kag-solar.webp">
+        <img
+          class="logo"
+          src="logo-kag-solar.png"
+          width="1100"
+          height="542"
+          alt="KAG Solar"
+        >
+      </picture>
+    </div>
+
+    <p class="eyebrow">Em breve</p>
+    <h1>Gestão inteligente<br>de energia solar</h1>
+    <p class="lede">Controle de usinas, rateio de créditos e faturamento em um só lugar.</p>
+
+    <ul class="meaning" aria-label="Significado de KAG">
+      <li>
+        <span class="letter" aria-hidden="true">K</span>
+        <span class="word">Kilowatts</span>
+      </li>
+      <li>
+        <span class="letter" aria-hidden="true">A</span>
+        <span class="word">Administração</span>
+      </li>
+      <li>
+        <span class="letter" aria-hidden="true">G</span>
+        <span class="word">Gestão</span>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    © 2026 KAG Solar <span>·</span> kagsolar.com.br
+  </footer>
+</body>
+</html>
